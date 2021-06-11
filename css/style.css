@@ -1,0 +1,58 @@
+h1 {
+    font-size: 25px;
+    color: #121212;
+  }
+  
+  h4 {
+    font-size: 20px;
+    color: #808080;
+  }
+  
+  .offer-label {
+    font-size: 13px;
+    color: #B3B3B3;
+  }
+  
+  .offer-label a {
+    color: #D4843E;
+  }
+  
+  p {
+    color: #353535;
+    font-weight: 500;
+    font-size: 15px;
+  }
+  
+  .variants label {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 500;
+    color: #929292;
+    padding: 0px 5px;
+    border: 1px solid #B1B1B1;
+    border-radius: 15px;
+  }
+  
+  .color label {
+    padding: 4px;
+    border-radius: 55px;
+  }
+  
+  .color label span{
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    border-radius: 55px;
+    border: 1px solid #B1B1B1;
+    vertical-align: middle;
+  }
+  
+  .variants input[type="radio"] {
+    display: none;
+  }
+  
+  .variants input[type="radio"]:checked + label {
+    color: #353535;
+    border: 1px solid #E77600;
+    box-shadow: 0 0 0 0.15rem rgb(231 118 0 / 35%);
+  }

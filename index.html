@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Frontend Task | Masuka Meem</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- Fetch all from variations -->
+        <div v-for="(variation, index) in variations" :key="index" class="container">
+          <div v-if="variation.attribute_combination[0]==chkStorage && variation.attribute_combination[1]==chkColor && variation.attribute_combination[2]==chkSim && variation.attribute_combination[3]==chkRegion" class="row align-items-center justify-content-center py-4">
+            <!-- Image Starts -->
+            <div class="col-md-5 col-9">
+              <div class="image">
+                <img class="img-fluid" :src="variation.image" alt="phnimg">
+              </div>
+            </div>
+            <!-- Image Ends -->
+            <!-- Specification Starts -->
+            <div class="col-lg-5 col-md-6 col-10">
+              <!-- Product Name & Price Starts -->
+              <div class="product">
+                <h1 class="fw-bold">iPhone 12 Pro Max</h1>
+                <h4>Tk. {{ variation.charge }}</h4>
+                <!-- Check stock -->
+                <p v-if="variation.charge == 0 || variation.stock == 0" class="text-danger">Not Available</p>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                  <label class="offer-label" for="inlineCheckbox1">
+                    Available EMI Offer
+                    <span><a href="#">View Plans</a></span>
+                  </label>
+                </div>
+              </div>
+              <!-- Product Name & Price Ends -->
+              <hr>
+              <!-- Variations Start -->
+              <!-- Fetch all from combinations -->
+              <div v-for="(combination, index) in combinations" :key="index" class="variants">
+                <!-- Storage Starts -->
+                <!-- Check storage in combinations -->
+                <div v-if="combination.Storage" class="storage row py-2">
+                  <div class="col-2">
+                    <p class="form-check-label">Storage:</p>
+                  </div>
+                  <div class="col">
+                    <!-- Fetch storage values from combinations -->
+                    <div v-for="(item, index) in combination.Storage" :key="index" class="form-check form-check-inline ps-sm-0 ps-2">
+                      <input v-model="chkStorage" class="form-check-input" type="radio" name="storageOptions" :id="item.id" :value="item.id" checked>
+                      <label :for="item.id">{{ item.value }}</label>
+                    </div>
+                  </div>
+                </div>
+                <!-- Storage Ends -->
+                <!-- Color Starts -->
+                <!-- Check color in combinations -->
+                <div v-if="combination.Color" class="color row py-2">
+                  <div class="col-2">
+                    <p class="form-check-label">Color:</p>
+                  </div>
+                  <div class="col">
+                    <!-- Fetch color values from combinations -->
+                    <div v-for="(item, index) in combination.Color" :key="index" class="form-check form-check-inline ps-sm-0 ps-2">
+                      <input v-model="chkColor" class="form-check-input" type="radio" name="colorOptions" :id="item.id" :value="item.id" checked>
+                      <label :for="item.id">
+                        <span :style="'background-color: #'+item.value.substr(item.value.length - 6)"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <!-- Color Ends -->
+                <!-- Sim Starts -->
+                <!-- Check sim in combinations -->
+                <div v-if="combination.Sim" class="sim row py-2">
+                  <div class="col-2">
+                    <p class="form-check-label">Sim:</p>
+                  </div>
+                  <div class="col">
+                    <!-- Fetch sim values from combinations -->
+                    <div v-for="(item, index) in combination.Sim" :key="index" class="form-check form-check-inline ps-sm-0 ps-2">
+                      <input v-model="chkSim" class="form-check-input" type="radio" name="simOptions" :id="item.id" :value="item.id" checked>
+                      <label :for="item.id">{{ item.value }}</label>
+                    </div>
+                  </div>
+                </div>
+                <!-- Sim Ends -->
+                <!-- Region Starts -->
+                <!-- Check region in combinations -->
+                <div v-if="combination.Region" class="region row py2">
+                  <div class="col-2">
+                    <p class="form-check-label">Region:</p>
+                  </div>
+                  <div class="col">
+                    <!-- Fetch region values from combinations -->
+                    <div v-for="(item, index) in combination.Region" :key="index" class="form-check form-check-inline ps-sm-0 ps-2">
+                      <input v-model="chkRegion" class="form-check-input" type="radio" name="regionOptions" :id="item.id" :value="item.id" checked>
+                      <label :for="item.id">{{ item.value }}</label>
+                    </div>
+                  </div>
+                </div>
+                <!-- Region Ends -->
+              </div>
+              <!-- Variations Ends-->
+            </div>
+            <!-- Specification Ends -->
+          </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+    </script>
+    <!-- Vue  -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                variations: [],
+                combinations: [],
+                chkStorage: '',
+                chkColor: '',
+                chkSim: '',
+                chkRegion: ''
+            },
+            mounted() {
+                this.fetchVariations(),
+                this.fetchCombinations()
+            },
+            methods: {
+                fetchVariations() {
+                axios.get('https://raw.githubusercontent.com/qtecsolution/Sample-JSON/main/variation.json').then(response => {
+                    this.variations = response.data
+                    this.variations.forEach((item) => {
+                        if(item.is_default === true) {
+                            this.chkStorage = item.attribute_combination[0]
+                            this.chkColor = item.attribute_combination[1]
+                            this.chkSim = item.attribute_combination[2]
+                            this.chkRegion = item.attribute_combination[3]
+                        }
+                    })
+                })
+                },
+                fetchCombinations() {
+                axios.get('https://raw.githubusercontent.com/qtecsolution/Sample-JSON/main/combination.json').then(response => {
+                    this.combinations = response.data
+                    console.log(this.combinations)
+                })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
